@@ -28,42 +28,30 @@ public class SpringHibernateApplication {
     @Bean
     public CommandLineRunner runner(DepartmentRepository departmentRepository, PersonRepository personRepository) {
         return (args) -> {
-            /*departmentRepository.save(new Department("Developers department"));
+            departmentRepository.save(new Department("Developers department"));
             departmentRepository.save(new Department("Artists department"));
-            departmentRepository.save(new Department("HR department"));*/
+            departmentRepository.save(new Department("HR department"));
 
-            /*personRepository.save(new Person("Amir", "Kadyrov", LocalDate.of(1997, 6, 9), departmentRepository.findById(1)));
+            personRepository.save(new Person("Amir", "Kadyrov", LocalDate.of(1997, 6, 9), departmentRepository.findById(1)));
             personRepository.save(new Person("Anastasia", "Grichenko", LocalDate.of(1993, 1, 19), departmentRepository.findById(2)));
             personRepository.save(new Person("Sergey", "Le", LocalDate.of(1997, 5, 30), departmentRepository.findById(2)));
             personRepository.save(new Person("Azamat", "Abuov", LocalDate.of(1997, 12, 22), departmentRepository.findById(3)));
-            personRepository.save(new Person("Dmitrii", "Evseev", LocalDate.of(1998, 11, 9), departmentRepository.findById(1)));*/
-
-            for (Department department : departmentRepository.findAll()) {
-                log.info(department.toString());
-            }
+            personRepository.save(new Person("Dmitrii", "Evseev", LocalDate.of(1998, 11, 9), departmentRepository.findById(1)));
 
             Department department1 = departmentRepository.findById(1);
             log.info(department1.toString());
 
-            for (Person person : personRepository.findAll()) {
-                log.info(person.toString());
-            }
-
-            Person person1 = personRepository.findById(1);
+            Person person1 = personRepository.findById(2);
             log.info(person1.toString());
 
-            personRepository.delete(person1);
+            Department department2 = departmentRepository.save(new Department(3, "Testing department"));
+            log.info(department2.toString());
 
-            // fetch customers by last name
-            /*log.info("Customer found with findByLastName('Bauer'):");
-            log.info("--------------------------------------------");
-            repository.findByLastName("Bauer").forEach(bauer -> {
-                log.info(bauer.toString());
-            });*/
-            // for (Customer bauer : repository.findByLastName("Bauer")) {
-            //  log.info(bauer.toString());
-            // }
-            log.info("");
+            Person person2 = personRepository.save(new Person(4,"Alexander", "Tatashin", LocalDate.of(1999, 1, 6), department2));
+            log.info(person2.toString());
+
+            departmentRepository.deleteById(1L);
+            personRepository.deleteById(3L);
         };
     }
 }

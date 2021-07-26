@@ -1,6 +1,8 @@
 package com.syncretis.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class Department {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
     private List<Person> personList;
 
     public Department() {

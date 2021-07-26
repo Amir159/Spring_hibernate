@@ -1,6 +1,8 @@
 package com.syncretis.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,7 @@ public class Person {
 
     private LocalDate birthday;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "department_id")
     @NotNull
     private Department department;
