@@ -4,18 +4,16 @@ import com.syncretis.entity.Department;
 import com.syncretis.entity.Person;
 import com.syncretis.repository.DepartmentRepository;
 import com.syncretis.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.zip.DataFormatException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class SpringHibernateApplication {
@@ -47,11 +45,29 @@ public class SpringHibernateApplication {
             Department department2 = departmentRepository.save(new Department(3, "Testing department"));
             log.info(department2.toString());
 
-            Person person2 = personRepository.save(new Person(4,"Alexander", "Tatashin", LocalDate.of(1999, 1, 6), department2));
+            Person person2 = personRepository.save(new Person(3, "Alexander", "Tatashin", LocalDate.of(1999, 1, 6), department2));
             log.info(person2.toString());
 
             departmentRepository.deleteById(1L);
             personRepository.deleteById(3L);
+
+            List<Person> personList1 = new ArrayList<>();
+            personList1.add(new Person("Maxim", "Rublev", LocalDate.of(1995, 9, 24), departmentRepository.findById(2)));
+            personList1.add(new Person("Alexey", "Kolmakov", LocalDate.of(1994, 4, 15), departmentRepository.findById(3)));
+            personList1.add(new Person("Olga", "Mazur", LocalDate.of(1997, 3, 27), departmentRepository.findById(2)));
+            personRepository.saveAll(personList1);
+
+            List<Person> personList2 = new ArrayList<>();
+            personList2.add(new Person(6,"Andrew", "Golovach", LocalDate.of(1997, 7, 13), departmentRepository.findById(3)));
+            personList2.add(new Person(7,"Kazybek", "Gabdolla", LocalDate.of(1998, 2, 20), departmentRepository.findById(2)));
+            personRepository.saveAll(personList2);
+
+            List<Person> personList3 = personRepository.findByIdBetween(3, 7);
+            personRepository.deleteAll(personList3);
+
+            for (Person person : personRepository.findAll()) {
+                log.info(person.toString());
+            }
         };
     }
 }
