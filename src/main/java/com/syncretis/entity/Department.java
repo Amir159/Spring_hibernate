@@ -1,11 +1,8 @@
 package com.syncretis.entity;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,9 +11,10 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)

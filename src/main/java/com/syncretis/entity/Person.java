@@ -1,13 +1,9 @@
 package com.syncretis.entity;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "person", schema = "publisher")
@@ -18,17 +14,17 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "second_name")
+    @Column(name = "second_name", nullable = false)
     private String secondName;
 
+    @Column(nullable = false)
     private LocalDate birthday;
 
     @ManyToOne()
-    @JoinColumn(name = "department_id")
-    @NotNull
+    @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
     public Person() {
