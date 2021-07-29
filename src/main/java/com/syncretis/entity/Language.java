@@ -4,28 +4,29 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "department", schema = "publisher")
-public class Department {
-
+@Table(name = "language", schema = "publisher")
+public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private long id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)
+    @ManyToMany
+    @JoinTable(schema = "publisher", name = "persons_languages",
+            joinColumns = @JoinColumn(name = "language_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> personList;
 
-    public Department() {
+    public Language() {
     }
 
-    public Department(String name) {
+    public Language(String name) {
         this.name = name;
     }
 
-    public Department(long id, String name) {
+    public Language(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -56,9 +57,9 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "Language{" +
                 "id = " + id +
-                ", name = '" + name + '\'' +
+                ", name = '" + name + '\'' + personList +
                 '}';
     }
 }
